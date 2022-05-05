@@ -28,17 +28,17 @@ tmp=`mktemp`
 if [ -f "$tmp" ]
 then
         echo "Find files" >> $log
-        find $LOGDIR -name '*.log' -mtime +$freedays > $tmp
-        find $LOGDIR -name '*.txt' -mtime +$freedays >> $tmp
+        find $logdir -name '*.log' -mtime +$freedays > $tmp
+        find $logdir -name '*.txt' -mtime +$freedays >> $tmp
         wc -l $tmp >>$log
         echo "Compress files" >> $log
         cat $tmp|xargs -I test gzip --best test >>$log 2>&1
         rm $tmp
         echo "Delete old archives" >> $log
-        find $LOGDIR -name '*.log.gz' -mtime +$days -print -delete >>$log 2>&1
-        find $LOGDIR -name '*.txt.gz' -mtime +$days -print -delete >>$log 2>&1
+        find $logdir -name '*.log.gz' -mtime +$days -print -delete >>$log 2>&1
+        find $logdir -name '*.txt.gz' -mtime +$days -print -delete >>$log 2>&1
         echo "Delete empty dirs" >> $log
-        find $LOGDIR -type d -empty -mtime +$days -print -delete >>$log 2>&1
+        find $logdir -type d -empty -mtime +$days -print -delete >>$log 2>&1
 else
         echo "Error: cant create $tmp temporary file"
 fi
